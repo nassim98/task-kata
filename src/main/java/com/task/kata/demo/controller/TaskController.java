@@ -6,6 +6,9 @@ import com.task.kata.demo.dto.TaskMapper;
 import com.task.kata.demo.exceptions.ResourceNotFoundException;
 import com.task.kata.demo.model.Task;
 import com.task.kata.demo.service.TaskService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +23,11 @@ public class TaskController {
 
     private final TaskService taskService;
 
+    @Operation(description = "Create a new task")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Task successfully created"),
+            @ApiResponse(responseCode = "400", description = "Invalid task input")
+    })
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody TaskDTO taskDTO) {
         try {
@@ -30,6 +38,11 @@ public class TaskController {
         }
     }
 
+    @Operation(description = "Update a task status by its ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Task successfully updated"),
+            @ApiResponse(responseCode = "404", description = "Task not found")
+    })
     @PutMapping("/{id}")
     public ResponseEntity<Task> updateTask(@PathVariable Long id, @Valid @RequestBody TaskDTO taskDTO) {
         try {
@@ -45,6 +58,10 @@ public class TaskController {
         }
     }
 
+    @Operation(description = "Retrieve a list of all tasks")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful retrieval of task list")
+    })
     @GetMapping
     public ResponseEntity<List<TaskDTO>> listTasks() {
         try {
