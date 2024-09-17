@@ -1,8 +1,8 @@
-package com.cata.demo.service;
+package com.task.kata.demo.service;
 
 
-import com.cata.demo.model.Task;
-import com.cata.demo.repository.TaskRepository;
+import com.task.kata.demo.model.Task;
+import com.task.kata.demo.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,21 +19,22 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    public void createTask(String name, String description) {
+    public Task createTask(String name, String description) {
         Task task = new Task();
         task.setName(name);
         task.setDescription(description);
-        task.setStatus("CREATE");
-        taskRepository.save(task);
+        task.setStatus("NEW");
+        return taskRepository.save(task);
     }
 
-    public void updateTask(Long id, String status) {
+    public Task updateTask(Long id, String status) {
         Optional<Task> optionalTask = taskRepository.findById(id);
         if (optionalTask.isPresent()) {
             Task existingTask = optionalTask.get();
             existingTask.setStatus(status);
-            taskRepository.save(existingTask);
+            return taskRepository.save(existingTask);
         }
+        return null;
     }
 
     public List<Task> listTasks() {

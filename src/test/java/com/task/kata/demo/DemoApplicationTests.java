@@ -1,4 +1,4 @@
-package com.cata.demo;
+package com.task.kata.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

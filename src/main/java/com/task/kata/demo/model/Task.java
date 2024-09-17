@@ -1,4 +1,4 @@
-package com.cata.demo.model;
+package com.task.kata.demo.model;
 
 
 import jakarta.persistence.*;
@@ -19,5 +19,5 @@ public class Task {
     private String name;
     private String description;
 
-    private String status; // IN PROGRESS - COMPLETED - NEW
+    private String status; // NEW - IN PROGRESS - COMPLETED
 }

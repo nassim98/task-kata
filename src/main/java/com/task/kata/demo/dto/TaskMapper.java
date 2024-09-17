@@ -1,6 +1,6 @@
-package com.cata.demo.dto;
+package com.task.kata.demo.dto;
 
-import com.cata.demo.model.Task;
+import com.task.kata.demo.model.Task;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public static List<TaskDTO> taskstoTaskDTS(List<Task> tasks) {
+    public static List<TaskDTO> taskstoTaskDTOS(List<Task> tasks) {
         return tasks.stream()
                 .map(TaskMapper::tasktoTaskDTO)
                 .toList();
