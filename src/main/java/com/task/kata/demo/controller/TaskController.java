@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,12 +32,8 @@ public class TaskController {
     })
     @PostMapping
     public ResponseEntity<Task> createTask(@Valid @RequestBody TaskDTO taskDTO) {
-        try {
             Task createdTask = taskService.createTask(taskDTO.getName(), taskDTO.getDescription());
             return ResponseEntity.ok(createdTask);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create task: " + e.getMessage());
-        }
     }
 
     @Operation(description = "Update a task status by its ID")
@@ -63,10 +61,10 @@ public class TaskController {
             @ApiResponse(responseCode = "200", description = "Successful retrieval of task list")
     })
     @GetMapping
-    public ResponseEntity<List<TaskDTO>> listTasks() {
+    public ResponseEntity<Page<TaskDTO>> listTasks(Pageable pageable) {
         try {
-            List<Task> tasks = taskService.listTasks();
-            List<TaskDTO> taskDTOs = TaskMapper.taskstoTaskDTOS(tasks);
+            Page<Task> tasks = taskService.listTasks(pageable);
+            Page<TaskDTO> taskDTOs = TaskMapper.taskstoTaskDTOS(tasks);
             return ResponseEntity.ok(taskDTOs);
         } catch (Exception e) {
             throw new RuntimeException("Failed to list tasks: " + e.getMessage());

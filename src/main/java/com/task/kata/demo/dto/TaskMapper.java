@@ -1,6 +1,7 @@
 package com.task.kata.demo.dto;
 
 import com.task.kata.demo.model.Task;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -13,9 +14,7 @@ public class TaskMapper {
                 .build();
     }
 
-    public static List<TaskDTO> taskstoTaskDTOS(List<Task> tasks) {
-        return tasks.stream()
-                .map(TaskMapper::tasktoTaskDTO)
-                .toList();
+    public static Page<TaskDTO> taskstoTaskDTOS(Page<Task> tasks) {
+        return tasks.map(TaskMapper::tasktoTaskDTO);
     }
 }
